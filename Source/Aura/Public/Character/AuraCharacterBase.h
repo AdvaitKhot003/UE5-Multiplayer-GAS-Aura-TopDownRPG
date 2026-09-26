@@ -16,4 +16,8 @@ class AURA_API AAuraCharacterBase : public ACharacter
 	
 public:
 	AAuraCharacterBase();
+	
+protected:
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Aura|Combat")
+	TObjectPtr<USkeletalMeshComponent> WeaponMesh;
 };
