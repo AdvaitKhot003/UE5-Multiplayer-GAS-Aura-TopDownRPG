@@ -7,6 +7,7 @@
 #include "AuraPlayerController.generated.h"
 
 class UAuraInputConfig;
+struct FInputActionValue;
 
 UCLASS()
 class AURA_API AAuraPlayerController : public APlayerController
@@ -22,4 +23,7 @@ protected:
 	
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Aura|DataAsset")
 	TObjectPtr<UAuraInputConfig> AuraInputConfig;
+	
+private:
+	void Move(const FInputActionValue& InputActionValue);
 };

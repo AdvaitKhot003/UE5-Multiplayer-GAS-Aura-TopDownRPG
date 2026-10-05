@@ -3,6 +3,7 @@
 #include "Player/AuraPlayerController.h"
 #include "EnhancedInputSubsystems.h"
 #include "EnhancedInput/AuraEnhancedInput.h"
+#include "GameplayTags/AuraGameplayTags.h"
 
 AAuraPlayerController::AAuraPlayerController()
 {
@@ -43,4 +44,29 @@ void AAuraPlayerController::SetupInputComponent()
 	if (!AuraInputConfig) return;
 	
 	UAuraEnhancedInput* AuraEnhancedInput = CastChecked<UAuraEnhancedInput>(InputComponent);
+	
+	AuraEnhancedInput->BindNativeInputAction(
+		AuraInputConfig, AuraGameplayTags::Input_Move, ETriggerEvent::Triggered, this, &ThisClass::Move);
+}
+
+void AAuraPlayerController::Move(const FInputActionValue& InputActionValue)
+{
+	const FVector2D InputAxisValue = InputActionValue.Get<FVector2D>();
+	const FRotator Rotation = GetControlRotation();
+	const FRotator YawRotation(0.f, Rotation.Yaw, 0.f);
+	
+	APawn* ControlledPawn = GetPawn<APawn>();
+	if (!ControlledPawn) return;
+	
+	if (!FMath::IsNearlyZero(InputAxisValue.Y))
+	{
+		const FVector ForwardDirection = YawRotation.RotateVector(FVector::ForwardVector);
+		ControlledPawn->AddMovementInput(ForwardDirection, InputAxisValue.Y);
+	}
+	
+	if (!FMath::IsNearlyZero(InputAxisValue.X))
+	{
+		const FVector RightDirection = YawRotation.RotateVector(FVector::RightVector);
+		ControlledPawn->AddMovementInput(RightDirection, InputAxisValue.X);
+	}
 }
