@@ -7,6 +7,7 @@
 #include "AuraPlayerController.generated.h"
 
 class UAuraInputConfig;
+class IAuraEnemyInterface;
 struct FInputActionValue;
 
 UCLASS()
@@ -17,6 +18,8 @@ class AURA_API AAuraPlayerController : public APlayerController
 public:
 	AAuraPlayerController();
 	
+	virtual void PlayerTick(float DeltaTime) override;
+	
 protected:
 	virtual void BeginPlay() override;
 	virtual void SetupInputComponent() override;
@@ -26,4 +29,14 @@ protected:
 	
 private:
 	void Move(const FInputActionValue& InputActionValue);
+	
+	void TraceUnderCursor();
+	
+	FHitResult CursorHitResult;
+	
+	UPROPERTY(Transient)
+	TScriptInterface<IAuraEnemyInterface> LastHitResultActor;
+	
+	UPROPERTY(Transient)
+	TScriptInterface<IAuraEnemyInterface> ThisHitResultActor;
 };
