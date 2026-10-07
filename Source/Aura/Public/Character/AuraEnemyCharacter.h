@@ -15,8 +15,18 @@ class AURA_API AAuraEnemyCharacter : public AAuraCharacterBase, public IAuraEnem
 public:
 	AAuraEnemyCharacter();
 	
+	virtual void BeginPlay() override;
+	
+#pragma region Ability System Interface
+	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override;
+	virtual UAttributeSet* GetAttributeSet() const override;
+#pragma endregion
+	
 #pragma region Enemy Interface
 	virtual void HighlightEnemy() override;
 	virtual void UnhighlightEnemy() override;
 #pragma endregion
+	
+private:
+	void InitAbilityEnemyInfo();
 };

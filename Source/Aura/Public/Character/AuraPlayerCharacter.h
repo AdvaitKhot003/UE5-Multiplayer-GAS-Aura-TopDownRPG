@@ -17,10 +17,21 @@ class AURA_API AAuraPlayerCharacter : public AAuraCharacterBase
 public:
 	AAuraPlayerCharacter();
 	
+	virtual void PossessedBy(AController* NewController) override;
+	virtual void OnRep_PlayerState() override;
+	
+#pragma region Ability System Interface
+	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override;
+	virtual UAttributeSet* GetAttributeSet() const override;
+#pragma endregion
+	
 protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Aura|Camera")
 	TObjectPtr<USpringArmComponent> CameraBoom;
 	
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Aura|Camera")
 	TObjectPtr<UCameraComponent> FollowCamera;
+	
+private:
+	void InitAbilityPlayerInfo();
 };
