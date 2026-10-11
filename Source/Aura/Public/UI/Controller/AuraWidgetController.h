@@ -43,6 +43,9 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void SetWidgetControllerParams(const FWidgetControllerParams& Params);
 	
+	virtual void BroadcastInitialValues();
+	virtual void BindCallbacksToDependencies();
+	
 protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Aura|WidgetController")
 	TObjectPtr<APlayerController> PlayerController;
