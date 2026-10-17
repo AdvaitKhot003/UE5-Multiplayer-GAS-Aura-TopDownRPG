@@ -43,7 +43,7 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Aura|Effects")
 	TObjectPtr<USceneComponent> EffectRoot;
 	
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Aura|Effects")
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Aura|Effects")
 	float EffectLevel = 1.f;
 	
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Aura|Effects")
