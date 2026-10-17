@@ -24,6 +24,8 @@ public:
 #pragma endregion
 	
 protected:
+	virtual void InitAbilityCharacterInfo();
+	
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Aura|Combat")
 	TObjectPtr<USkeletalMeshComponent> WeaponMesh;
 	

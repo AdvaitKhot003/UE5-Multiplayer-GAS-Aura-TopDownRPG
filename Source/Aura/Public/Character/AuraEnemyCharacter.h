@@ -27,6 +27,6 @@ public:
 	virtual void UnhighlightEnemy() override;
 #pragma endregion
 	
-private:
-	void InitAbilityEnemyInfo();
+protected:
+	virtual void InitAbilityCharacterInfo() override;
 };

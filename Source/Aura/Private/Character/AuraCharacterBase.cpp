@@ -20,3 +20,8 @@ UAttributeSet* AAuraCharacterBase::GetAttributeSet() const
 {
 	return AttributeSet;
 }
+
+void AAuraCharacterBase::InitAbilityCharacterInfo()
+{
+	
+}

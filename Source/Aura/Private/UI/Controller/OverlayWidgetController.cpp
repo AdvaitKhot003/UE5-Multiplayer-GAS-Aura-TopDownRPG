@@ -2,6 +2,7 @@
 
 #include "UI/Controller/OverlayWidgetController.h"
 #include "AbilitySystem/AuraAttributeSet.h"
+#include "AbilitySystem/AuraAbilitySystem.h"
 
 void UOverlayWidgetController::BroadcastInitialValues()
 {
@@ -17,19 +18,22 @@ void UOverlayWidgetController::BroadcastInitialValues()
 void UOverlayWidgetController::BindCallbacksToDependencies()
 {
 	const UAuraAttributeSet* AuraAttributeSet = Cast<UAuraAttributeSet>(AttributeSet);
-	if (!AuraAttributeSet || !AbilitySystem) return;
+	UAuraAbilitySystem* AuraAbilitySystem = Cast<UAuraAbilitySystem>(AbilitySystem);
+	if (!AuraAttributeSet || !AuraAbilitySystem) return;
 	
-	AbilitySystem->GetGameplayAttributeValueChangeDelegate(
+	AuraAbilitySystem->GetGameplayAttributeValueChangeDelegate(
 		AuraAttributeSet->GetHealthAttribute()).AddUObject(this, &ThisClass::HealthChanged);
 	
-	AbilitySystem->GetGameplayAttributeValueChangeDelegate(
+	AuraAbilitySystem->GetGameplayAttributeValueChangeDelegate(
 		AuraAttributeSet->GetMaxHealthAttribute()).AddUObject(this, &ThisClass::MaxHealthChanged);
 	
-	AbilitySystem->GetGameplayAttributeValueChangeDelegate(
+	AuraAbilitySystem->GetGameplayAttributeValueChangeDelegate(
 		AuraAttributeSet->GetManaAttribute()).AddUObject(this, &ThisClass::ManaChanged);
 	
-	AbilitySystem->GetGameplayAttributeValueChangeDelegate(
+	AuraAbilitySystem->GetGameplayAttributeValueChangeDelegate(
 		AuraAttributeSet->GetMaxManaAttribute()).AddUObject(this, &ThisClass::MaxManaChanged);
+	
+	AuraAbilitySystem->GameplayEffectAssetTagDelegate.AddUObject(this, &ThisClass::OnGameplayEffectAssetTagsReceived);
 }
 
 void UOverlayWidgetController::HealthChanged(const FOnAttributeChangeData& Data) const
@@ -50,4 +54,17 @@ void UOverlayWidgetController::ManaChanged(const FOnAttributeChangeData& Data) c
 void UOverlayWidgetController::MaxManaChanged(const FOnAttributeChangeData& Data) const
 {
 	OnMaxManaChanged.Broadcast(Data.NewValue);
+}
+
+void UOverlayWidgetController::OnGameplayEffectAssetTagsReceived(const FGameplayTagContainer& AssetTags) const
+{
+	if (AssetTags.IsEmpty()) return;
+	
+	for (const FGameplayTag& AssetTag : AssetTags)
+	{
+		if (GEngine)
+		{
+			GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Green, AssetTag.ToString());
+		}
+	}
 }

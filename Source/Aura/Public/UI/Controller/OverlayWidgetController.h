@@ -35,4 +35,6 @@ protected:
 	void MaxHealthChanged(const FOnAttributeChangeData& Data) const;
 	void ManaChanged(const FOnAttributeChangeData& Data) const;
 	void MaxManaChanged(const FOnAttributeChangeData& Data) const;
+	
+	void OnGameplayEffectAssetTagsReceived(const FGameplayTagContainer& AssetTags) const;
 };
