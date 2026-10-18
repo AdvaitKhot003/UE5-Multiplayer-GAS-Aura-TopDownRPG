@@ -62,9 +62,10 @@ void UOverlayWidgetController::OnGameplayEffectAssetTagsReceived(const FGameplay
 	
 	for (const FGameplayTag& AssetTag : AssetTags)
 	{
-		if (GEngine)
+		if (!AssetTag.MatchesTag(FGameplayTag::RequestGameplayTag(TEXT("Message")))) continue;
+		if (const FUIMessageWidgetRow* Row = FindDataTableRowByTag<FUIMessageWidgetRow>(MessageWidgetData, AssetTag))
 		{
-			GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Green, AssetTag.ToString());
+			UIMessageWidgetRowDelegate.Broadcast(*Row);
 		}
 	}
 }
