@@ -25,6 +25,10 @@ public:
 	virtual UAttributeSet* GetAttributeSet() const override;
 #pragma endregion
 	
+#pragma region Combat Interface
+	virtual int32 GetCharacterLevel() const override;
+#pragma endregion
+	
 protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Aura|Camera")
 	TObjectPtr<USpringArmComponent> CameraBoom;

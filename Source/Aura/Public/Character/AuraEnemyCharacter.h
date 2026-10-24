@@ -22,6 +22,10 @@ public:
 	virtual UAttributeSet* GetAttributeSet() const override;
 #pragma endregion
 	
+#pragma region Combat Interface
+	virtual int32 GetCharacterLevel() const override;
+#pragma endregion
+	
 #pragma region Enemy Interface
 	virtual void HighlightEnemy() override;
 	virtual void UnhighlightEnemy() override;
@@ -29,4 +33,8 @@ public:
 	
 protected:
 	virtual void InitAbilityCharacterInfo() override;
+	
+private:
+	UPROPERTY(EditAnywhere, Category = "Aura|AbilitySystem")
+	int32 EnemyLevel = 1;
 };

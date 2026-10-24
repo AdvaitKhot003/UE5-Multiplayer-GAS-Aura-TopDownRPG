@@ -63,6 +63,12 @@ UAttributeSet* AAuraPlayerCharacter::GetAttributeSet() const
 	return AuraPlayerState? AuraPlayerState->GetAttributeSet() : nullptr;
 }
 
+int32 AAuraPlayerCharacter::GetCharacterLevel() const
+{
+	const AAuraPlayerState* AuraPlayerState = GetPlayerState<AAuraPlayerState>();
+	return AuraPlayerState? AuraPlayerState->GetPlayerLevel() : 0;
+}
+
 void AAuraPlayerCharacter::PossessedBy(AController* NewController)
 {
 	Super::PossessedBy(NewController);
@@ -88,6 +94,7 @@ void AAuraPlayerCharacter::InitAbilityCharacterInfo()
 	if (!AbilitySystem || !AttributeSet) return;
 	
 	AbilitySystem->InitAbilityActorInfo(AuraPlayerState, this);
+	InitializeDefaultAttributes();
 	
 	UAuraAbilitySystem* AuraAbilitySystem = Cast<UAuraAbilitySystem>(AbilitySystem);
 	if (!AuraAbilitySystem) return;
